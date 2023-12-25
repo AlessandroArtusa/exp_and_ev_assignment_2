@@ -1,6 +1,39 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header"
+    "main main main"
+    "footer footer footer";
+  gap: 20px;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+header {
+  grid-area: header;
+  text-align: center;
+}
+
+main {
+  grid-area: main;
+}
+
+main p {
+  text-align: center;
+  margin: 20px;
+}
+
+footer {
+  grid-area: footer;
+  background-color: white;
+  position: sticky;
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+  margin: 0;
 }
 
 a {
