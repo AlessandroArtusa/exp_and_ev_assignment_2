@@ -12,7 +12,25 @@
       <h1>Compile Form</h1>
     </header>
 
-    <main id="intro-main"></main>
+    <main>
+      <form>
+        <label for="age-input">Age</label>
+        <input
+          id="age-input"
+          type="number"
+          min="1"
+          max="99"
+          placeholder="Enter your age"
+        />
+
+        <label for="gender-input">Gender</label>
+        <select id="gender-input">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </form>
+    </main>
 
     <footer>
       <p>Copyright: artusa@usi.ch, roberto.ibanez@usi.ch</p>
