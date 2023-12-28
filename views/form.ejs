@@ -12,8 +12,8 @@
       <h1>Compile Form</h1>
     </header>
 
-    <main>
-      <form>
+    <main id="form-main">
+      <form id="myForm" method="post" action="/submit-form">
         <label for="age-input">Age</label>
         <input
           id="age-input"
@@ -21,10 +21,12 @@
           min="6"
           max="99"
           placeholder="Enter your age"
+          required
+          name="age"
         />
 
         <label for="gender-input">Gender</label>
-        <select id="gender-input">
+        <select id="gender-input" name="gender">
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="other">Other</option>
@@ -33,22 +35,28 @@
         <label for="programmer-input"
           >Had previous programming experience</label
         >
-        <input id="programmer-input" type="checkbox" />
+        <input id="programmer-input" type="checkbox" name="programmer" />
 
         <label for="language-input">English native speaker</label>
-        <input id="language-input" type="checkbox" />
+        <input id="language-input" type="checkbox" name="language" />
 
         <label for="computer-usage">Computer usage frequency</label>
-        <select id="computer-usage">
+        <select id="computer-usage" name="computerUsage">
           <option value="rarely">Rarely</option>
           <option value="regularly">Regularly</option>
           <option value="often">Often</option>
         </select>
       </form>
+
+      <button id="submitBtn" form="myForm" type="submit" class="link-button">
+        <b>Start the test!</b>
+      </button>
     </main>
 
     <footer>
       <p>Copyright: artusa@usi.ch, roberto.ibanez@usi.ch</p>
     </footer>
+
+    <script src="/js/form-script.js"></script>
   </body>
 </html>

@@ -11,4 +11,16 @@ router.get('/form', (req, res) => {
   res.render('form');
 });
 
+/* GET test page. */
+router.get('/test', (req, res) => {
+  res.render('test');
+});
+
+/* POST form data. */
+router.post('/submit-form', (req, res) => {
+  console.log(req.body);
+
+  res.redirect('/test');
+});
+
 module.exports = router;

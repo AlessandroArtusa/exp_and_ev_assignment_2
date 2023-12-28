@@ -71,3 +71,12 @@ form {
   border: #080809 solid 1px;
   border-radius: 10px;
 } 
+
+#form-main {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+#submitBtn {
+  font-size: 20px;
+}
