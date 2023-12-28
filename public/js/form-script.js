@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 const form = document.getElementById("myForm");
 const submitButton = document.getElementById("submitBtn");
 
@@ -13,7 +11,12 @@ submitButton.addEventListener("click", (e) => {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+            })
+            .then(() => {
+                window.location.href = "/test";
+            })
             .catch((error) => {
                 console.error('Error: ', error)
             });

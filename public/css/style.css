@@ -10,6 +10,7 @@ body {
   gap: 20px;
   overflow-x: hidden;
   margin: 0;
+  padding: 20px;
 }
 
 header {
@@ -69,7 +70,7 @@ form {
   margin: auto;
   padding: 20px 50px 20px 50px;
   border: #080809 solid 1px;
-  border-radius: 10px;
+  border-radius: 10px
 } 
 
 #form-main {
@@ -79,4 +80,6 @@ form {
 
 #submitBtn {
   font-size: 20px;
+  margin: 20px;
+  transition: 250ms;
 }
