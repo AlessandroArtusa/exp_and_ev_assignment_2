@@ -108,15 +108,30 @@ input[type="number"] {
   padding: 20px;
 }
 
-.identifier-link {
-  margin: auto;
+.identifier-btn {
+  /* margin: auto;
   border: solid 1px #676774;
   padding: 50px;
   width: 60%;
   height: 60%;
-  border-radius: 20px;
   font-size: 30px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+  font-style: italic;
+  font-size: 40px;
+  transition: 250ms;
+  border-radius: 20px;
+}
+
+.identifier-btn:hover {
+  background-color: peachpuff;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .identifier-btn {
+    font-size: 25px;
+    margin: 0;
+  }
 }

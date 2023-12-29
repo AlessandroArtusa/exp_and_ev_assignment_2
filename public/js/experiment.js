@@ -3,7 +3,7 @@ const testValues = [
         case: "kebab-case",
         sentence: "acquire antidote",
         correct: "acquire-antidote",
-        distractors: ["acoir-antidote", "acquire-antidose", "acquite-antidote"],
+        distractors: ["acqoir-antidote", "acquire-antidose", "acquite-antidote"],
         selected: false
     },
     {
@@ -42,7 +42,6 @@ const testValues = [
         selected: false
     }
 ]
-let trialsList = [];
 
 /**
  * Function that loads testValues to localStorage.
@@ -50,26 +49,34 @@ let trialsList = [];
 function saveToLocalStorageTestValues() {
     localStorage.setItem("testValues", JSON.stringify(testValues));
 }
-saveToLocalStorageTestValues();
+if (localStorage.getItem("testValues") === null) {
+    console.log('initialized testValues');
+    saveToLocalStorageTestValues();
+}
+
+function getLocalStorageTestValues() {
+    return JSON.parse(localStorage.getItem("testValues"));
+}
 
 /**
  * Function to choose the sentence to be displayed for the current trial.
  */
 function chooseSentence() {
-    const remainingValues = testValues.filter(x => !x.selected);
+    const remainingValues = getLocalStorageTestValues().filter(x => !x.selected);
     /* Control case if it this page is reached when trials are complete. */
-    if (remainingValues === null) {
+    console.log('remainingValues = ', remainingValues);
+    if (remainingValues.length === 0) {
         fetch('/result', {
             method: 'GET'
         });
+        return; 
     }
 
     const randomElement = remainingValues[Math.floor(Math.random() * remainingValues.length)];
 
     localStorage.setItem("selectedSentence", randomElement.sentence);
 
-    document.getElementById('sentence-h2').innerHTML = randomElement.sentence;
-
+    document.getElementById('sentence-h2').innerHTML = `<i>${randomElement.sentence}</i>`;
 }
 
 let sentence = localStorage.getItem('selectedSentence');
