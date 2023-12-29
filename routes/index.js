@@ -17,7 +17,17 @@ function uploadCSVToS3(csvContent, fileName) {
     Body: csvContent
   };
 
-  return s3.upload(params).promise();
+  return new Promise((resolve, reject) => {
+    s3.putObject(params, function (err, data) {
+      if (err) {
+        console.error('Error:', err);
+        reject(err);
+      } else {
+        console.log('Successfully uploaded data to myBucket/myKey', data);
+        resolve(data);
+      }
+    });
+  });
 }
 
 
