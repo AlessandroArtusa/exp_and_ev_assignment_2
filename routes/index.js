@@ -10,27 +10,6 @@ process.env.AWS_REGION = 'eu-west-1';
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 
-function uploadCSVToS3(csvContent, fileName) {
-  const params = {
-    Bucket: process.env.BUCKETEER_BUCKET_NAME,
-    Key: fileName,
-    Body: csvContent
-  };
-
-  return new Promise((resolve, reject) => {
-    s3.putObject(params, function (err, data) {
-      if (err) {
-        console.error('Error:', err);
-        reject(err);
-      } else {
-        console.log('Successfully uploaded data to myBucket/myKey', data);
-        resolve(data);
-      }
-    });
-  });
-}
-
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index');
@@ -76,7 +55,30 @@ router.post('/save-data', async (req, res) => {
     // Use timestamp in filename
     const filename = `data-${timestamp}.csv`;
 
-    await uploadCSVToS3(csvString, filename);
+    // await uploadCSVToS3(csvString, filename);
+
+    var params = {
+      Bucket: process.env.BUCKETEER_BUCKET_NAME,
+      Key: filename,
+      Body: csvString
+    };
+
+    s3.putObject(params, function put(err, data) {
+      if (err) {
+        console.log(err, err.stack);
+        return;
+      } else {
+        console.log(data);
+      }
+
+      delete params.Body;
+      s3.getObject(params, function put(err, data) {
+        if (err) console.log(err, err.stack);
+        else console.log(data);
+
+        console.log(data.Body.toString());
+      });
+    });
 
     res.status(200).send('CSV file uploaded to S3 successfully.');
   } catch (error) {
