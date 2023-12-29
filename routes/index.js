@@ -2,6 +2,25 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const { parseAsync } = require('json2csv');
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: 'eu-west-1' 
+});
+
+const s3 = new AWS.S3();
+
+function uploadCSVToS3(csvContent, bucketName, fileName) {
+  const params = {
+    Bucket: bucketName,
+    Key: fileName,
+    Body: csvContent
+  };
+
+  return s3.upload(params).promise();
+}
 
 
 /* GET home page. */
@@ -40,6 +59,8 @@ router.post('/save-data', async (req, res) => {
   try {
     const csvString = await parseAsync(JSON.stringify(data));
 
+    const bucketName = 'exp-and-ev';
+
     // Get current date and time
     const date = new Date();
 
@@ -49,13 +70,12 @@ router.post('/save-data', async (req, res) => {
     // Use timestamp in filename
     const filename = `data-${timestamp}.csv`;
 
-    // Write CSV string to a CSV file
-    fs.writeFileSync(filename, csvString, 'utf-8');
+    await uploadCSVToS3(csvString, bucketName, filename);
 
-    res.status(200).send('CSV file saved successfully.');
+    res.status(200).send('CSV file uploaded to S3 successfully.');
   } catch (error) {
-    console.error('Error converting JSON to CSV:', error);
-    res.status(500).send('Error saving data.');
+    console.error('Error:', error);
+    res.status(500).send('Error processing data.');
   }
 });
 
