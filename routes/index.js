@@ -11,16 +11,20 @@ router.get('/form', (req, res) => {
   res.render('form');
 });
 
-/* GET test page. */
-router.get('/test', (req, res) => {
-  res.render('test');
+/* GET sentence page. */
+router.get('/sentence', (req, res) => {
+  res.render('sentence');
+});
+
+router.get('/identifier', (req, res) => {
+  res.render('identifier');
 });
 
 /* POST form data. */
 router.post('/submit-form', (req, res) => {
-  console.log(req.body);
+  console.log("req.body: ", req.body);
 
-  res.redirect('/test');
+  res.redirect('/sentence');
 });
 
 module.exports = router;

@@ -10,7 +10,6 @@ body {
   gap: 20px;
   overflow-x: hidden;
   margin: 0;
-  padding: 20px;
 }
 
 header {
@@ -78,8 +77,46 @@ form {
   grid-template-rows: auto auto;
 }
 
+input[type="checkbox"] {
+  max-height: 17px;
+}
+
+input[type="number"] {
+  min-width: 100px;
+}
+
 #submitBtn {
   font-size: 20px;
   margin: 20px;
   transition: 250ms;
+}
+
+#test-main {
+  display: grid;
+}
+
+#sentence-h2 {
+  margin: auto;
+  justify-self: center;
+}
+
+#identifier-main {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 50px;
+  padding: 20px;
+}
+
+.identifier-link {
+  margin: auto;
+  border: solid 1px #676774;
+  padding: 50px;
+  width: 60%;
+  height: 60%;
+  border-radius: 20px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
