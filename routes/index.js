@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const { parseAsync } = require('json2csv');
+
+process.env.AWS_ACCESS_KEY_ID = process.env.BUCKETEER_AWS_ACCESS_KEY_ID;
+process.env.AWS_SECRET_ACCESS_KEY = process.env.BUCKETEER_AWS_SECRET_ACCESS_KEY;
+process.env.AWS_REGION = 'eu-west-1';
+
+
 const AWS = require('aws-sdk');
-
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: 'eu-west-1' 
-});
-
 const s3 = new AWS.S3();
 
-function uploadCSVToS3(csvContent, bucketName, fileName) {
+function uploadCSVToS3(csvContent, fileName) {
   const params = {
-    Bucket: bucketName,
+    Bucket: process.env.BUCKETEER_BUCKET_NAME,
     Key: fileName,
     Body: csvContent
   };
@@ -59,8 +57,6 @@ router.post('/save-data', async (req, res) => {
   try {
     const csvString = await parseAsync(JSON.stringify(data));
 
-    const bucketName = 'exp-and-ev';
-
     // Get current date and time
     const date = new Date();
 
@@ -70,7 +66,7 @@ router.post('/save-data', async (req, res) => {
     // Use timestamp in filename
     const filename = `data-${timestamp}.csv`;
 
-    await uploadCSVToS3(csvString, bucketName, filename);
+    await uploadCSVToS3(csvString, filename);
 
     res.status(200).send('CSV file uploaded to S3 successfully.');
   } catch (error) {
